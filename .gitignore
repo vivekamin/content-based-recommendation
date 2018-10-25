@@ -1,0 +1,8 @@
+.DS_Store
+.vscode/
+**/.idea/
+**/node_modules
+venv
+outputfile
+aw-assignment2-report.docx
+aw-assignment2-report.pdf
