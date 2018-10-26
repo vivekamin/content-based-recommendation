@@ -6,7 +6,6 @@ services:
       - 3000:3000
     volumes: 
       - ./front-end:/usr/src/app
-      - node_modules:/usr/src/app/node_modules
   elasticsearch:
     image: elasticsearch:6.4.1
     ports:
@@ -28,5 +27,3 @@ services:
 networks:
   docker_elk:
     driver: bridge
-volumes:
-  node_modules:
