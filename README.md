@@ -7,13 +7,13 @@ The system consist of three different independent blocks
 
 # How to run the project:
 
-    - Two different folders:
+   - Two different folders:
         - wikibook-crawler
         - front-end
 
-    -  Setup Elasticsearch before crawling and indexing documents using Docker or manually installing it.
+   -  Setup Elasticsearch before crawling and indexing documents using Docker or manually installing it.
 
-    - For Web-App, be in `front-end` folder:
+   - Setup Elasticsearch, Kibana, web-app using Docker, be in `front-end` folder:
         - If using docker,
             - Run `npm install`
             - Run `cd ..`
@@ -24,7 +24,7 @@ The system consist of three different independent blocks
             - Install elasticsearch, do require changes in elasticsearch.yml file.
             - Run `npm start`
 
-    - For Crawling open Wikibook-crawler folder in PyCharm and follow below steps:
+   - For Crawling open Wikibook-crawler folder in PyCharm and follow below steps:
         - Install dependencies stated in `requirements.txt`, if using PyCharm it will automatically suggest that. If not install using pip. Dependencies are:
             - beautifulsoup4
             - elasticsearch
@@ -32,5 +32,5 @@ The system consist of three different independent blocks
         - Run `crawler.py ` to crawl all documents of Wikibooks regarding Java Programming. This will generate a text file named as `outputfile` containing all documents.
         - Run `elastic-connector.py` to load all documents in elasticsearch for indexing purpose.
     
-    - Open `http://localhost:3000`
-    - Video link: https://www.youtube.com/watch?v=0SYtXPSKjvQ
+   - Open `http://localhost:3000`
+   - Video link: https://www.youtube.com/watch?v=0SYtXPSKjvQ
