@@ -1,13 +1,11 @@
 # Content Based Recommendation
 The system consist of three different independent blocks
 
- 1)Content Collection: Crawling and Processing wikibooks content for Java Programming using Python,BeautifulSoup.
- 
- 2)Content Indexing: Indexing the processed data using `elasticsearch`.
- 
- 3)Web app: A web platform for end-user to explore the system
+  - Content Collection: Crawling and Processing wikibooks content for Java Programming using Python,BeautifulSoup.
+  - Content Indexing: Indexing the processed data using `elasticsearch`.
+  - Web app: A web platform for end-user to explore the system
 
-- How to run the project:
+# How to run the project:
 
     - There are two different folders for the assignment:
         - wikibook-crawler
