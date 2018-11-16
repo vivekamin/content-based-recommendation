@@ -13,7 +13,7 @@ The system consist of three different independent blocks
 
    -  Setup Elasticsearch before crawling and indexing documents using Docker or manually installing it.
 
-   - Setup Elasticsearch, Kibana, web-app using Docker, be in `front-end` folder:
+   - **Setup Elasticsearch, Kibana, web-app using Docker**, be in `front-end` folder:
         - If using docker,
             - Run `npm install`
             - Run `cd ..`
