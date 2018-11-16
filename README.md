@@ -7,7 +7,7 @@ The system consist of three different independent blocks
 
 # How to run the project:
 
-    - There are two different folders for the assignment:
+    - Two different folders:
         - wikibook-crawler
         - front-end
 
