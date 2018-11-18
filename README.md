@@ -1,5 +1,5 @@
 # Content Based Recommendation
-The system consist of three different independent blocks
+The system consist of three different independent process
 
   - Content Collection: Crawling and Processing wikibooks content for Java Programming using Python,BeautifulSoup.
   - Content Indexing: Indexing the processed data using `elasticsearch`.
