@@ -1,4 +1,7 @@
 # Content Based Recommendation
+Implemented a content-based recommender via an web app by recommending similarity-based Java programming wikibooks content to
+Stackoverflow.com data set.
+
 The system consist of three different stages
 
   - Content Collection: Crawling and Processing wikibooks content for Java Programming using Python,BeautifulSoup.
