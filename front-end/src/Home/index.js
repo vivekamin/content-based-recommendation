@@ -36,7 +36,7 @@ export default class extends Component {
 
     }
     componentDidMount() {
-        AOS.init({delay:500});
+        AOS.init({delay:300, mirror: false});
         this.handleClick(0);
     }
 
@@ -215,7 +215,7 @@ recommending similarity-based Java programming wikibooks content.</Header.Subhea
                                 {!this.state.loading && this.state.result_sources.map((object, index) => {
                                     return (
                                         //JSON.stringify(object)
-                                        <Table definition key={index} data-aos='fade-up' data-aos-anchor-placement="top-bottom">
+                                        <Table definition key={index} data-aos='zoom-in' data-aos-anchor-placement="top-bottom">
 
 
                                             <Table.Body>
