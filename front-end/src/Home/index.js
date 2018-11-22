@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Button, Grid, Segment, Table, Image, Divider, Input, Form, Header, Loader, Icon, Label, List } from 'semantic-ui-react';
 import elasticsearch from 'elasticsearch';
 import posts from './post.json';
-import Highlight from 'react-highlight'
+import Highlight from 'react-highlight';
+import AOS from 'aos';
 
 
 const buttons = ["Post 1", "Post 2", "Post 3", "Post 4", "Post 5", "Post 6", "Post 7", "Post 8", "Post 9", "Post 10"];
@@ -11,6 +12,8 @@ var client = new elasticsearch.Client({
     host: 'localhost:9200',
     log: 'trace'
 });
+
+
 export default class extends Component {
     constructor(props) {
         console.log(posts);
@@ -33,6 +36,7 @@ export default class extends Component {
 
     }
     componentDidMount() {
+        AOS.init({delay:500});
         this.handleClick(0);
     }
 
@@ -211,7 +215,7 @@ recommending similarity-based Java programming wikibooks content.</Header.Subhea
                                 {!this.state.loading && this.state.result_sources.map((object, index) => {
                                     return (
                                         //JSON.stringify(object)
-                                        <Table definition key={index}>
+                                        <Table definition key={index} data-aos='fade-up' data-aos-anchor-placement="top-bottom">
 
 
                                             <Table.Body>
