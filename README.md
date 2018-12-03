@@ -1,6 +1,8 @@
 # Content Based Recommendation
-![image](https://user-images.githubusercontent.com/25477734/48756252-9cb0ae00-ec55-11e8-96e7-4a8fe43504e2.png)
 
+<kbd>
+  <img src="https://user-images.githubusercontent.com/25477734/48756252-9cb0ae00-ec55-11e8-96e7-4a8fe43504e2.png">
+</kbd>
 
 
 ## Project Description
