@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { Button, Grid, Segment, Table, Image, Divider, Input, Form, Header, Loader, Icon, Label, List } from 'semantic-ui-react';
+import { Button, Grid, Segment, Table, Image, Divider, Input, Form, Header, Loader, Icon, Label } from 'semantic-ui-react';
 import elasticsearch from 'elasticsearch';
 import posts from './post.json';
-import Highlight from 'react-highlight';
+
+import ExplanationSection from './Componenets/ExplanationSection';
+import ResultSection from './Componenets/ResultSection';
+
 import AOS from 'aos';
 
 
@@ -14,9 +17,14 @@ var client = new elasticsearch.Client({
 });
 
 
+const PostButton = ({  clicked, text }) => {
+    return (<Grid.Row  onClick={clicked}><center><Button style={{ margin: '1em' }} primary> {text} </Button></center></Grid.Row>);
+}
+
+
 export default class extends Component {
     constructor(props) {
-        console.log(posts);
+        //console.log(posts);
         super(props);
         this.state = {
             queryNumber: '',
@@ -36,7 +44,7 @@ export default class extends Component {
 
     }
     componentDidMount() {
-        AOS.init({delay:300, mirror: false});
+        AOS.init({ delay: 300, mirror: false });
         this.handleClick(0);
     }
 
@@ -53,7 +61,7 @@ export default class extends Component {
     }
     async handleFormSubmit() {
 
-        console.log("Searching......." + this.state.searchContent);
+        //console.log("Searching......." + this.state.searchContent);
         let queryToSearch = this.state.searchContent
         this.setState({ loading: true, customSearch: false });
         this.setState({ queryContent: queryToSearch, queryType: "Custom search", queryCode: "", queryNumber: "" });
@@ -75,10 +83,10 @@ export default class extends Component {
                 }
             });
 
-            console.log(response);
-            console.log(response.hits.hits);
+            //console.log(response);
+            //console.log(response.hits.hits);
             let result_sources = response.hits.hits.map((obj) => obj._source);
-            console.log(result_sources);
+            //console.log(result_sources);
             this.setState({ result_sources, loading: false });
         }
         catch (e) {
@@ -90,9 +98,10 @@ export default class extends Component {
 
 
     async handleClick(text) {
-        console.log(text);
+        //console.log(text);
+        window.scrollTo(0, 0);
         this.setState({ loading: true, customSearch: false });
-        console.log(posts[text].type);
+        //console.log(posts[text].type);
         this.setState({ queryContent: posts[text].text, queryType: posts[text].type, queryCode: posts[text].code, queryNumber: text + 1 });
         client.ping({
             requestTimeout: 30000,
@@ -100,7 +109,7 @@ export default class extends Component {
             if (error) {
                 console.error('elasticsearch cluster is down!');
             } else {
-                console.log('All is well');
+                //console.log('All is well');
             }
         });
         let contentToQuery = posts[text].text.replace(/[^a-zA-Z ]/g, " ");
@@ -124,10 +133,10 @@ export default class extends Component {
                 }
             });
 
-            console.log(response);
-            console.log(response.hits.hits);
+            //console.log(response);
+            //console.log(response.hits.hits);
             let result_sources = response.hits.hits.map((obj) => obj._source);
-            console.log(result_sources);
+            //console.log(result_sources);
             this.setState({ result_sources, loading: false });
         }
         catch (e) {
@@ -159,22 +168,29 @@ recommending similarity-based Java programming wikibooks content.</Header.Subhea
                         <Button positive={this.state.explanationFlag} onClick={() => { this.setState({ explanationFlag: true }) }}>Explaination</Button>
                     </Button.Group>
 
-                    {!this.state.explanationFlag && <Form onSubmit={this.handleFormSubmit}>
-                        <Input value={this.state.searchContent} size="medium" style={{ width: "40%" }} onChange={this.handleChange} placeholder='Either Search or click on post for recommendation....' />
+                    {
+                        !this.state.explanationFlag &&
+                        <Form onSubmit={this.handleFormSubmit}>
+                            <Input value={this.state.searchContent} size="medium" style={{ width: "40%" }} onChange={this.handleChange} placeholder='Either Search or click on post for recommendation....' />
 
-                    </Form>}
+                        </Form>
+                    }
 
 
 
                 </Segment>
-                {!this.state.explanationFlag &&
+                {
+                    !this.state.explanationFlag &&
                     <div className="fixedContainer">
                         {buttons.map((text, index) => {
-                            return (<Grid.Row key={index} onClick={() => this.handleClick(index)}><center><Button style={{ margin: '1em' }} primary> {text} </Button></center></Grid.Row>)
+                            // return (<Grid.Row key={index} onClick={() => this.handleClick(index)}><center><Button style={{ margin: '1em' }} primary> {text} </Button></center></Grid.Row>)
+                            return (<PostButton key={index} clicked={() => this.handleClick(index)} text={text} />)
                         })}
                     </div>
                 }
-                {!this.state.explanationFlag && !this.state.customSearch &&
+
+                {
+                    !this.state.explanationFlag && !this.state.customSearch &&
                     <Grid style={{ paddingLeft: '10%' }}
                     >
 
@@ -214,79 +230,31 @@ recommending similarity-based Java programming wikibooks content.</Header.Subhea
                                 {!this.state.loading && this.state.result_sources.length === 0 && <p> No results </p>}
                                 {!this.state.loading && this.state.result_sources.map((object, index) => {
                                     return (
+                                        <ResultSection key={index} index={index} object={object} />
                                         //JSON.stringify(object)
-                                        <Table definition key={index} data-aos='zoom-in' data-aos-anchor-placement="top-bottom">
-
-
-                                            <Table.Body>
-                                                <Table.Row>
-                                                    <Table.Cell colSpan="2"><center>Result #{index + 1}</center></Table.Cell>
-                                                </Table.Row>
-                                                <Table.Row>
-                                                    <Table.Cell>Heading</Table.Cell>
-                                                    <Table.Cell>{object.heading[object.heading.length - 1] === ']' ? object.heading.substr(0, object.heading.length - 6) : object.heading}</Table.Cell>
-                                                </Table.Row>
-                                                <Table.Row>
-                                                    <Table.Cell>Relevant link</Table.Cell>
-                                                    <Table.Cell><a href={object.link}>{object.link}</a></Table.Cell>
-                                                </Table.Row>
-                                                <Table.Row>
-                                                    <Table.Cell>Content</Table.Cell>
-                                                    <Table.Cell>{object.content.map((content, index) => { return (<p key={index}>{content}</p>) })}</Table.Cell>
-                                                </Table.Row>
-                                                <Table.Row>
-                                                    <Table.Cell>Code</Table.Cell>
-                                                    {/* <Table.Cell>{object.code.map((code, index) => {return (<pre key={index}>{code}</pre>)})}</Table.Cell> */}
-                                                    <Table.Cell>{object.code.map((code, index) => { return (<Highlight className="Java" key={index}>{code}</Highlight>) })}</Table.Cell>
-                                                </Table.Row>
-                                                {/*
-                                            <Table.Row>
-                                                <Table.Cell>Content</Table.Cell>
-                                                <Table.Cell>{this.state.queryContent}</Table.Cell>
-                                            </Table.Row>
-                                            <Table.Row>
-                                                <Table.Cell>Code</Table.Cell>
-                                                <Table.Cell>{this.state.queryCode}</Table.Cell>
-                                            </Table.Row> */}
-                                            </Table.Body>
-                                        </Table>
                                     );
                                 })}
                             </Segment>
 
                         </Grid.Column>
-                    </Grid>}
-                {this.state.customSearch && this.state.searchContent !== '' &&
+                    </Grid>
+                }
+
+                {
+                    this.state.customSearch && this.state.searchContent !== '' &&
                     <Grid style={{ padding: '10%' }}>
                         <Header as='h2' icon textAlign='center'>
                             <Loader active size="huge" inline />
                             <Header.Content></Header.Content> <Header.Subheader>You are Searching for <b>{this.state.searchContent}</b></Header.Subheader>
                         </Header>
-                    </Grid>}
-                {this.state.explanationFlag &&
-                    <Segment style={{ marginLeft: "20%", marginRight: "20%" }}>
+                    </Grid>
+                }
 
-                        <List bulleted>
-                            <List.Item>Scrapped the Wikibooks Java Programming content. Total of 103 pages have been scrapped and from that 533 documents have been stored in ElasticSearch.</List.Item>
-                            <List.Item>Different types of Alanyzer have used for indexing those records. Analyzer used are standard, stemmer and stop.
-                                <List.List>
-                                    <List.Item ><b>Stop Analyzer:</b> The stop analyzer is like the simple analyzer but also supports the removal of stop words.</List.Item>
-                                    <List.Item><b>Stemmer:</b> A filter that provides access to (almost) all of the available stemming token filters through a single unified interface.</List.Item>
-                                    <List.Item><b>Standard:</b> This divides the text into terms on word boundaries, as defined by the Unicode Text Segmentation algorithm. It removes most punctuation symbols. It is the best choice for most languages.</List.Item>
-                                </List.List>
-                            </List.Item>
-                            <List.Item>
-                            React web has been used to create a web application, which has two functionality.
-                                <List.List>
-                                    <List.Item>Provides the recommendation for the list of posts provided in excel</List.Item>
-                                    <List.Item>Facilitate the user to search for any topic related to java.</List.Item>
-                                </List.List>
-                            </List.Item>
-                            
-                        </List>
-                    
-    
-                </Segment>
+                {
+                    this.state.explanationFlag &&
+                    <Segment style={{ marginLeft: "20%", marginRight: "20%" }}>
+                        <ExplanationSection />
+                    </Segment>
                 }
 
 
