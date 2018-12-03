@@ -3,7 +3,7 @@
 
 
 
-
+## Project Description
 #### Implemented a content-based recommender via an web app by recommending similarity-based Java programming wikibooks content to Stackoverflow.com data set.
 
 The system consist of three different stages
@@ -12,7 +12,7 @@ The system consist of three different stages
   - Content Indexing: Indexing the processed data using `elasticsearch`.
   - Web app: A web platform for end-user to explore the system
 
-# How to run the project:
+## How to run the project:
 
    - Two different folders:
         - wikibook-crawler
