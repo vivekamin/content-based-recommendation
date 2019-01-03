@@ -3,8 +3,8 @@ import { Button, Grid, Segment, Table, Image, Divider, Input, Form, Header, Load
 import elasticsearch from 'elasticsearch';
 import posts from './post.json';
 
-import ExplanationSection from './Componenets/ExplanationSection';
-import ResultSection from './Componenets/ResultSection';
+import ExplanationSection from './Components/ExplanationSection';
+import ResultSection from './Components/ResultSection';
 
 import AOS from 'aos';
 
